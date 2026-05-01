@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Post</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 600px;
+    }
+
+    h1 { color: #667eea; margin-bottom: 24px; }
+
+    .error {
+      background: #fdecea;
+      color: #c0392b;
+      padding: 10px 14px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-size: 0.9em;
+    }
+
+    label { display: block; font-weight: 600; color: #555; margin-bottom: 6px; }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1em;
+      font-family: inherit;
+      margin-bottom: 20px;
+    }
+
+    textarea { height: 160px; resize: vertical; }
+
+    input:focus, textarea:focus { outline: none; border-color: #667eea; }
+
+    .button-group { display: flex; gap: 10px; }
+
+    button {
+      flex: 1;
+      padding: 12px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover { background: #764ba2; }
+
+    a {
+      flex: 1;
+      display: block;
+      padding: 12px;
+      background: #eee;
+      color: #555;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 1em;
+      text-align: center;
+      transition: background 0.3s;
+    }
+
+    a:hover { background: #ddd; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>New Post</h1>
+
+    <% if (message) { %>
+      <div class="error"><%= message %></div>
+    <% } %>
+
+    <form method="POST" action="/posts">
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" placeholder="Post title" required />
+
+      <label for="content">Content</label>
+      <textarea id="content" name="content" placeholder="Write your post..." required></textarea>
+
+      <div class="button-group">
+        <a href="/posts">Cancel</a>
+        <button type="submit">Publish</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
