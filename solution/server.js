@@ -2,9 +2,13 @@ const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
+const { createClient } = require('redis');
 
 const app = express();
 const PORT = 3001;
+
+const redisClient = createClient();
+redisClient.on('error', (err) => console.error('Redis client error:', err));
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -32,7 +36,17 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+// Connect to Redis then start server
+redisClient.connect()
+  .then(() => {
+    console.log('Connected to Redis');
+    app.listen(PORT, () => {
+      console.log(`Server is running on http://localhost:${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('Failed to connect to Redis:', err);
+    process.exit(1);
+  });
+
+module.exports = { redisClient };
