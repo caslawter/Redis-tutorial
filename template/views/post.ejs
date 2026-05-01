@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= post ? post.title : 'Post Not Found' %></title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: white;
+      text-decoration: none;
+      margin-bottom: 24px;
+      font-size: 0.95em;
+      opacity: 0.85;
+    }
+
+    .back-link:hover { opacity: 1; }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 40px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    h1 { color: #333; font-size: 1.8em; margin-bottom: 10px; }
+
+    .post-meta { font-size: 0.85em; color: #888; margin-bottom: 24px; }
+
+    .post-body { color: #444; line-height: 1.8; font-size: 1.05em; }
+
+    .not-found { color: white; text-align: center; font-size: 1.3em; margin-top: 80px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/posts" class="back-link">&larr; Back to Posts</a>
+
+    <% if (!post) { %>
+      <p class="not-found">Post not found.</p>
+    <% } else { %>
+      <div class="card">
+        <h1><%= post.title %></h1>
+        <p class="post-meta">By <strong><%= post.username %></strong> &middot; <%= new Date(post.createdAt).toLocaleDateString() %></p>
+        <p class="post-body"><%= post.content %></p>
+      </div>
+    <% } %>
+  </div>
+</body>
+</html>
