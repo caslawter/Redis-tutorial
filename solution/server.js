@@ -1,52 +1,48 @@
-const express = require('express');
-const session = require('express-session');
-const bodyParser = require('body-parser');
-const path = require('path');
-const { createClient } = require('redis');
+const express = require("express");
+const session = require("express-session");
+const bodyParser = require("body-parser");
+const path = require("path");
+const { connectClient } = require("./redisClient");
 
 const app = express();
 const PORT = 3001;
 
-const redisClient = createClient();
-redisClient.on('error', (err) => console.error('Redis client error:', err));
-
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({
-  secret: 'your-secret-key',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 1000 * 60 * 60 }, // 1 hour
-}));
+app.use(express.static(path.join(__dirname, "public")));
+app.use(
+    session({
+        secret: "your-secret-key",
+        resave: false,
+        saveUninitialized: false,
+        cookie: { maxAge: 1000 * 60 * 60 }, // 1 hour
+    }),
+);
 
 // Set view engine
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 // Routes
-const authRoutes = require('./routes/authRoutes');
-const postRoutes = require('./routes/postRoutes');
-app.use('/', authRoutes);
-app.use('/', postRoutes);
+const authRoutes = require("./routes/authRoutes");
+const postRoutes = require("./routes/postRoutes");
+app.use("/", authRoutes);
+app.use("/", postRoutes);
 
 // Home route
-app.get('/', (req, res) => {
-  res.render('index');
+app.get("/", (req, res) => {
+    res.render("index");
 });
 
 // Connect to Redis then start server
-redisClient.connect()
-  .then(() => {
-    console.log('Connected to Redis');
-    app.listen(PORT, () => {
-      console.log(`Server is running on http://localhost:${PORT}`);
+connectClient()
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server is running on http://localhost:${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error("Failed to connect to Redis:", err);
+        process.exit(1);
     });
-  })
-  .catch((err) => {
-    console.error('Failed to connect to Redis:', err);
-    process.exit(1);
-  });
-
-module.exports = { redisClient };

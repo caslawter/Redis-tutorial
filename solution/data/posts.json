@@ -158,13 +158,5 @@
     "title": "Pellentesque Dapibus Suscipit Ligula",
     "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "createdAt": "2026-02-14T04:32:45.997Z"
-  },
-  {
-    "id": 21,
-    "userId": 9,
-    "username": "henry_b",
-    "title": "Proin Tincidunt Magna Sed Risus",
-    "content": "Proin tincidunt magna sed risus volutpat fringilla. Curabitur vitae nulla dapibus, ornare dolor in, gravida erat. Etiam porttitor finibus pretium. Nunc at lorem feugiat ante porttitor pharetra. Cras molestie elit at velit feugiat, vel lobortis risus feugiat.",
-    "createdAt": "2026-02-05T17:34:41.937Z"
   }
 ]
