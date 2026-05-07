@@ -2,7 +2,8 @@ const express = require("express");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const path = require("path");
-const { connectClient } = require("./redisClient");
+const { redisClient, connectClient } = require("./redisClient");
+const { RedisStore } = require("connect-redis");
 
 const app = express();
 const PORT = 3001;
@@ -13,6 +14,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
     session({
+        store: new RedisStore({ client: redisClient }),
         secret: "your-secret-key",
         resave: false,
         saveUninitialized: false,
